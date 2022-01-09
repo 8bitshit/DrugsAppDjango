@@ -1,0 +1,78 @@
+{% extends 'forum/base.html' %}
+{% load hitcount_tags %}
+{% block content %}
+    <div class="container">
+        <!--Navigation-->
+        <div class="navigate">
+            <span><a href="{% url 'forums' %}">Forum</a> >> <a href="{{forum.get_url}}">{{forum.title}}</a></span>
+        </div>
+        <!--Display posts table-->
+        <div class="posts-table">
+            <div class="table-head">
+                <div class="status">Status</div>
+                <div class="subjects">Temat</div>
+                <div class="replies">Ospowiedzi/<br>Wyświetlenia</div>
+                <div class="last-reply">Ostatnia odpowiedź</div>
+            </div>
+
+            {% for post in posts %}
+            <div class="table-row">
+
+                {% if post.closed == True %}
+                 <div class="status"><i class="fa fa-lock"></i></div>
+                {% elif post.num_comments == 0 %}
+                <div class="status"><i class="fa fa-frown-o"></i></div>
+                {% elif post.num_comments > 0 and post.num_comments <= 3 %}
+                 <div class="status"><i class="fa fa-book"></i></div>
+                 {% elif post.num_comments > 3 and post.num_comments <= 5 %}
+                 <div class="status"><i class="fa fa-fire"></i></div>
+                  {% elif post.num_comments > 5 %}
+                 <div class="status"><i class="fa fa-rocket"></i></div>
+
+                {% endif %}
+
+
+
+
+
+
+                <div class="subjects">
+                    <a href="{{post.get_url}}">{{post.title}}</a>
+                    <br>
+                    <span>Wątek rozpoczęty przez <b><a href="">{{post.user.user|title}}</a></b> .</span>
+                </div>
+                <div class="replies">
+                    {{post.num_comments}} odpowiedzi <br> {% get_hit_count for post %} wyświetleń
+                </div>
+
+                {% if post.last_reply %}
+                <div class="last-reply">
+                    {{post.last_reply.date|date}}
+                    <br>przez <b><a href="">{{post.last_reply.user.user|title}}</a></b>
+                </div>
+                {% else %}
+                <div class="last-reply">
+                    Brak odpowiedzi w tym poście
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+
+
+        </div>
+        <!--Pagination starts-->
+            <div class="pagination">
+                {% for num_page in posts.paginator.page_range %} <a href="?page={{num_page}}">{{num_page}}</a> {% endfor %}
+            </div>
+        <!--pagination ends-->
+    </div>
+
+    <div class="note">
+        <span><i class="fa fa-frown-o"></i>&nbsp; Post bez odpowiedzi</span>&nbsp;&nbsp;&nbsp;<a href=""><i class="fa fa-share-square"></i></a><br>
+        <span><i class="fa fa-book"></i>&nbsp; Post mało popularny ( poniżej 3 odpowiedzi )</span>&nbsp;&nbsp;&nbsp;<a href=""><i class="fa fa-share-square"></i></a><br>
+        <span><i class="fa fa-fire"></i>&nbsp; Post popularny</span>&nbsp;&nbsp;&nbsp;<a href=""><i class="fa fa-share-square"></i></a><br>
+        <span><i class="fa fa-rocket"></i>&nbsp; Post bardzo popularny ( powyżej 5 odpowiedzi )</span>&nbsp;&nbsp;&nbsp;<a href=""><i class="fa fa-share-square"></i></a><br>
+        <span><i class="fa fa-lock"></i>&nbsp; Post zamknięty</span>&nbsp;&nbsp;&nbsp;<a href=""><i class="fa fa-share-square"></i></a><br>
+    </div>
+    {% endblock content %}

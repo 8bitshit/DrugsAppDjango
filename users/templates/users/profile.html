@@ -1,0 +1,140 @@
+{% extends "index/index.html" %}
+{% load hitcount_tags %}
+{% load crispy_forms_tags %}
+{% block content4 %}
+        <div class="content-section">
+              <div class="media">
+                      <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
+                      <div class="media-body">
+                              <h2 class="account-heading">{{ user.username }}</h2>
+                              <p class="text-secondary">{{ user.email }}</p>
+
+                      </div>
+              </div>
+
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Aktualizacja profilu</legend>
+                    {{ u_form|crispy }}
+                    {{ i_form|crispy }}
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-outline-info" type="submit">Aktualizuj</button>
+                </div>
+            </form>
+
+        </div>
+
+        <div class="content-section">
+            <legend class="border-bottom mb-4">Ulubione</legend>
+            {% for drug in fav_drug %}
+                <div class="row justify-content-start bg-light">
+                    <div class="col">
+                        {{ drug.drugname }}
+                    </div>
+                    <div class="col">
+                        Ocena:
+                    </div>
+                    <div class="col-3">
+                        <a href="{% url 'favourite_add' drug.id %}" class="btn btn-outline-danger btn-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                            </svg>
+                         Usuń z ulubionych
+                        </a>
+                     </div>
+                    <div class="col-2">
+                        <a href="{% url 'comments' drug.id %}" class="btn btn-outline-success btn-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-text-fill" viewBox="0 0 16 16">
+                                <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z"/>
+                            </svg>
+                        Skomentuj
+                        </a>
+                    </div>
+                    <div class="col-3">
+                        <a href="{% url 'forums' %}" class="btn btn-outline-info btn-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+                                <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/>
+                                <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
+                            </svg>
+                        Dyskutuj na forum
+                        </a>
+                    </div>
+                </div>
+                <br>
+             {% endfor %}
+
+
+        </div>
+
+
+        <div class="content-section">
+            <legend class="border-bottom mb-4">Moje posty na forum</legend>
+
+           <div class="row justify-content-start bg-light">
+                    <div class="col">
+                        <b>Status</b>
+                    </div>
+                    <div class="col">
+                        <b>Temat</b>
+                    </div>
+                    <div class="col">
+                        <b>Ospowiedzi/<br>Wyświetlenia</b>
+                    </div>
+                    <div class="col">
+                        <b>Ostatnia odpowiedź</b>
+                    </div>
+           </div>
+            <br><br>
+
+            {% for post in posts %}
+
+            <div class="row justify-content-start bg-light">
+                    <div class="col">
+                        {% if post.closed == True %}
+                            <div class="status"><i class="fa fa-lock fa-2x"></i></div>
+                        {% elif post.num_comments == 0 %}
+                            <div class="status"><i class="fa fa-frown-o fa-2x"></i></div>
+                        {% elif post.num_comments > 0 and post.num_comments <= 3 %}
+                             <div class="status"><i class="fa fa-book fa-2x"></i></div>
+                        {% elif post.num_comments > 3 and post.num_comments <= 5 %}
+                            <div class="status"><i class="fa fa-fire fa-2x"></i></div>
+                        {% elif post.num_comments > 5 %}
+                            <div class="status"><i class="fa fa-rocket fa-2x"></i></div>
+
+                        {% endif %}
+
+
+                    </div>
+                    <div class="col">
+                        <b><a class="text-info" href="{{post.get_url}}">{{post.title}}</a></b>
+                        <br>
+                        <span>Wątek rozpoczęty przez <a class="text-info" href="">{{post.user.user|title}}</a></span>
+                    </div>
+                    <div class="col">
+                        {{post.num_comments}} odpowiedzi <br> {% get_hit_count for post %} wyświetleń
+                    </div>
+                    <div class="col">
+
+                        {% if post.last_reply %}
+                            <div class="last-reply">
+                                {{post.last_reply.date|date}}
+                                <br>przez <a class="text-info" href="">{{post.last_reply.user.user|title}}</a>
+                            </div>
+                        {% else %}
+                             <div class="last-reply">
+                                Brak odpowiedzi w tym poście
+                             </div>
+                        {% endif %}
+
+                    </div>
+
+            </div>
+            <br>
+            {% endfor %}
+        </div>
+
+{% endblock content4 %}
+

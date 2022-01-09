@@ -1,0 +1,10 @@
+{% extends "index/index.html" %}
+{% block content %}
+    <div class="content-section bg-dark text-light">
+         <legend class="border-bottom mb-4">Wylogowano z serwisu</legend>
+        <small class="text-muted">
+            <a class="ml-2 text-info" href="{% url 'login' %}">Zaloguj się ponownie</a>
+        </small>
+    </div>
+
+{% endblock content %}

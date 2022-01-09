@@ -1,0 +1,8 @@
+{% extends "users/profile.html" %}
+{% block content5 %}
+{% for drug in fav_drug %}
+
+{{ drug.drugname }}
+
+{% endfor %}
+{% endblock content5 %}

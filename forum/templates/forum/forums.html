@@ -1,0 +1,53 @@
+{% extends 'forum/base.html' %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="subforum">
+            <div class="subforum-title text-light">
+                <b>Ostatnio na forum:</b>
+            </div>
+
+            {% for forum in forums %}
+            <div class="subforum-row">
+                <div class="subforum-icon subforum-column center">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-journal-medical" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v.634l.549-.317a.5.5 0 1 1 .5.866L9 6l.549.317a.5.5 0 1 1-.5.866L8.5 6.866V7.5a.5.5 0 0 1-1 0v-.634l-.549.317a.5.5 0 1 1-.5-.866L7 6l-.549-.317a.5.5 0 0 1 .5-.866l.549.317V4.5A.5.5 0 0 1 8 4zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+                    <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+                    <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+                </svg>
+                </div>
+                <div class="subforum-description subforum-column">
+                    <h4><a href="{{forum.get_url}}">{{forum.title}}</a></h4>
+                    <p>Opis: {{forum.description}} </p>
+                </div>
+                <div class="subforum-stats subforum-column center">
+                    <span>{{forum.num_posts}} postów</span>
+                </div>
+                <div class="subforum-info subforum-column">
+                    <b><a href="{{forum.last_post.get_url}}">Ostatni post</a></b> utworzony przez <a href="">{{forum.last_post.user.user|title}}</a>
+                    <br>dnia <small>{{forum.last_post.date|date}}</small>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+        <!--More-->
+
+
+
+    </div>
+
+    <!-- Forum Info -->
+    <div class="forum-info">
+        <div class="chart">
+            Statystyki forum: &nbsp;<i class="fa fa-bar-chart"></i>
+        </div>
+        <b>
+        <span><u>{{num_posts}}</u> postów w <u>{{num_categories}}</u> kategoriach, utworzonych przez <u>{{num_users}}</u> użytkowników.</span><br>
+        <span>Ostatni post: <b><a href="{{last_post.get_url}}">{{last_post.title}}</a></b> dnia {{last_post.date|date}} utworzony przez <a href="">{{last_post.user.user|title}}</a></span>.<br>
+        <span>Czytaj <a href="{% url 'latest_posts' %}"> ostatnie posty.</a> .</span><br>
+        </b>
+    </div>
+
+    {% endblock content %}
