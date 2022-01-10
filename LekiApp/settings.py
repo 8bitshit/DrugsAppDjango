@@ -96,10 +96,10 @@ DATABASES = {
             #'USER': 'LAPTOP-2C3C8SMC\\35891',
             #'PASSWORD': 'password',
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'drugs',
-            'USER': 'postgres',
-            'PASSWORD': 'Solid1987snake.',
-            'HOST': 'LAPTOP-2C3C8SMC',
+            'NAME': 'd9n3m7cf3fg4f5',
+            'USER': 'chqfijuzjexzqu',
+            'PASSWORD': '4d247b79b695725ef50cec6c4c2f565ca385f66a0b94035466744cc5e5b0dde0',
+            'HOST': 'ec2-99-81-177-233.eu-west-1.compute.amazonaws.com',
             'PORT': '5432',
 
             # 'OPTIONS': {
