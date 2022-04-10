@@ -91,37 +91,19 @@ DATABASES = {
     # },
 
     'default': {
-            #'ENGINE': 'sql_server.pyodbc',
-            #'NAME': 'test',
-            #'USER': 'LAPTOP-2C3C8SMC\\35891',
-            #'PASSWORD': 'password',
+           
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'd9n3m7cf3fg4f5',
-            'USER': 'chqfijuzjexzqu',
-            'PASSWORD': '4d247b79b695725ef50cec6c4c2f565ca385f66a0b94035466744cc5e5b0dde0',
-            'HOST': 'ec2-99-81-177-233.eu-west-1.compute.amazonaws.com',
+            'NAME': 'x',
+            'USER': 'y',
+            'PASSWORD': 'z',
+            'HOST': 'zz',
             'PORT': '5432',
 
-            # 'OPTIONS': {
-            #     'driver': 'ODBC Driver 17 for SQL Server',
-            # },
+           
         },
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'sql_server.pyodbc',
-#         'NAME': 'test',
-#         #'USER': 'LAPTOP-2C3C8SMC\\35891',
-#         #'PASSWORD': 'password',
-#         'HOST': 'LAPTOP-2C3C8SMC\SQLEXPRESS',
-#         'PORT': '',
-#
-#         'OPTIONS': {
-#             'driver': 'ODBC Driver 17 for SQL Server',
-#         },
-#     },
-# }
+
 
 
 # Password validation
@@ -180,6 +162,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'test.projektinz@gmail.com'
-EMAIL_HOST_PASSWORD = 'sbjlrwexpeommlam'
+EMAIL_HOST_USER = 'x'
+EMAIL_HOST_PASSWORD = 'y'
 
